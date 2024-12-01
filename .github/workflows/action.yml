@@ -1,0 +1,16 @@
+
+name: AIM Release
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+
+jobs:
+  ci:
+    if: github.event.action != 'closed'
+    uses: ./.github/workflows/ci.yml
+
+  cd:
+    if: github.event.pull_request.merged == true
+    needs: ci
+    uses: ./.github/workflows/cd.yml
